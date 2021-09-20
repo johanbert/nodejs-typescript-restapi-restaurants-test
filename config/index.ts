@@ -5,6 +5,7 @@ export const serverConfig = {
 
 export const GLOBAL_CONFIG = {
   SERVER_PORT: Number( process.env.SERVER_PORT ) || 3000,
+  SERVER_HOST: process.env.SERVER_PORT  || 'localhost',
   API_KEY : process.env.API_KEY || 'HERE_YOUR_API_KEY_FROM_GOOGLEMAPS',
   JWT_SECRET : process.env.JWT_SECRET || '|I|am|A|Complex|Secret|',
   JWT_LIFETIME : Number(process.env.JWT_LIFETIME) || 60 * 10 // 10 minutes

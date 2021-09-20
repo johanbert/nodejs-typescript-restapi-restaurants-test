@@ -7,7 +7,10 @@
         "start": "tsc && node ./dist/app.js --unhandled-rejections=strict",
         "start-docker": "tsc && node ./dist/app.js --unhandled-rejections=strict",
         "debug-windows": "SET DEBUG=* && npm start",
-        "debug-docker": "export DEBUG=* && npm run start-docker"
+        "debug-docker": "export DEBUG=* && npm run start-docker",
+        "test": "mocha ./tests/index.js",
+        "test-debug": "export DEBUG=* && npm test",
+        "test-debug-windows": "SET DEBUG=* && npm test"
     },
     "author": "Johanbert Mosquera",
     "license": "ISC",
@@ -15,8 +18,6 @@
         "argon2": "^0.27.0",
         "axios": "^0.21.4",
         "body-parser": "^1.19.0",
-        "class-validator": "^0.13.1",
-        "connect-mongodb-session": "^3.0.0",
         "cors": "^2.8.5",
         "debug": "^4.3.2",
         "dotenv": "^10.0.0",
@@ -27,6 +28,7 @@
         "mongoose": "^5.3.11",
         "npm": "^7.21.0",
         "shortid": "^2.2.16",
+        "should": "^13.2.3",
         "winston": "^3.3.3"
     },
     "devDependencies": {

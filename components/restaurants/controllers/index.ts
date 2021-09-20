@@ -5,11 +5,11 @@ const log: debug.IDebugger = debug('app:restaurants-controller');
 
 class RestaurantsController {
     async listRestaurants(req: express.Request, res: express.Response) {
-        const   lat = res.locals.lat,
-                lon = res.locals.lon,
-                radio  = (req.query.radio) ? Number(req.query.radio) : 500; // 500 meters by default
+        const   lat = req.body.lat,
+                lon = req.body.lon,
+                radio  = (req.body.radio) ? Number(req.body.radio) : 500; // 500 meters by default
         const restaurants = await RestaurantsService.list(lat,lon, radio);
-        if ( Object.keys(restaurants).includes("error_message"))
+        if ( Object.keys(restaurants).includes("status") && restaurants.status == 'INVALID_REQUEST')
             return res.status(404).send(restaurants);
         return res.status(200).send(restaurants);
     }

@@ -1,3 +1,4 @@
-node_modules
-.gitignore
+dist/
+node_modules/
 .dockerignore
+.gitignore

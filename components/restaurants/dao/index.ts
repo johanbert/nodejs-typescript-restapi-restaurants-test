@@ -8,7 +8,7 @@ import { HistoryModel } from '../models/history.model';
 const log: debug.IDebugger = debug('app:restaurants-dao');
 
 class RestaurantsDAO {   
-    private collection = 'restaurants'
+    private collection = 'restaurants_history'
     private Schema = mongooseService.getMongoose().Schema;
     private historySchema = new this.Schema(HistoryModel);
     private History = mongooseService.getMongoose().model(this.collection, this.historySchema);
@@ -40,8 +40,8 @@ class RestaurantsDAO {
         // lon = lon || 151.1957362; // by default for tests
         const URL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat}%2C${lon}&radius=${radio}&type=restaurant&key=${GLOBAL_CONFIG.API_KEY}`
         let result: AxiosResponse = await axios.get(URL);
-        const hasError = Object.keys(result.data).includes("error_message")
-        if (hasError) {
+        const hasError = Object.keys(result.data).includes("status")
+        if (hasError && result.data.status == 'INVALID_REQUEST') {
             let {error_message, status } = result.data;
             this.addHistoryRequest({error_message, status});
             return {error_message, status}
@@ -49,7 +49,6 @@ class RestaurantsDAO {
         let response: any = Array.from(result.data.results).map( ({ name,geometry:{ location: {lat, lng} } }: any) => 
                                                             ({ name,location : {lat, lng} } ) );
         this.addHistoryRequest(response);
-
         return response
     }
 

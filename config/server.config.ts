@@ -19,7 +19,7 @@ server.app.use( errorhandlerMiddleware.badRequestHandler );
 server.app.use( errorhandlerMiddleware.errorHandler );
 
 server.app.get('/', (req: express.Request, res: express.Response) => {
-    res.status(200).send(`:Server running at http://localhost:${GLOBAL_CONFIG.SERVER_PORT}`);
+    res.status(200).send(`:Server running at http://${GLOBAL_CONFIG.SERVER_HOST}:${GLOBAL_CONFIG.SERVER_PORT}`);
 });
 
 export default server;
