@@ -1,0 +1,35 @@
+version : '3'
+services: 
+  mongo:
+    build:
+      context: .
+      dockerfile: ./mongo-seed/Dockerfile
+    container_name: mongo
+    restart: on-failure
+    ports:
+        - "27017:27017"
+    expose:
+      - 27017
+
+  mongo_seed:
+    build:
+      context: .
+      dockerfile: ./mongo-seed/Dockerfile
+    container_name: mongo_seed
+    links:
+      - mongo
+    command:
+      - ./init.sh
+
+  restaurants-apirest:
+    container_name: restaurants-apirest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: ./.env
+    ports:
+      - "3000:3000"
+    links: 
+      - mongo
+    expose:
+      - 3000
